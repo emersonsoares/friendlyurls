@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using System.Data.Entity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FriendlyUrls.Web.Models
 {
@@ -12,6 +13,16 @@ namespace FriendlyUrls.Web.Models
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
+        }
+
+        public DbSet<Notice> Notices { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Notice>().Property(x => x.Slug).IsRequired().HasMaxLength(255);
+            modelBuilder.Entity<Notice>().Property(x => x.Title).IsRequired().HasMaxLength(255);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -1,28 +1,27 @@
+using FriendlyUrls.Web.Models;
+
 namespace FriendlyUrls.Web.Migrations
 {
     using System.Data.Entity.Migrations;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(FriendlyUrls.Web.Models.ApplicationDbContext context)
+        protected override void Seed(ApplicationDbContext context)
         {
-            //  This method will be called after migrating to the latest version.
+            var notice1 = Notice.New("awesome-notice", "Awesome Notice", "Lorem Ipsum Dolor Sit Amet");
+            notice1.Id = 1;
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            var notice2 = Notice.New("tragic-notice", "Tragic Notice", "Lorem Ipsum Dolor Sit Amet");
+            notice2.Id = 2;
+
+            context.Notices.AddOrUpdate(notice1);
+            context.Notices.AddOrUpdate(notice2);
+            context.SaveChanges();
         }
     }
 }
