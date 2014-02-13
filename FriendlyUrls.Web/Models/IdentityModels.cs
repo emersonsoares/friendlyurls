@@ -19,6 +19,7 @@ namespace FriendlyUrls.Web.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Notice>().HasKey(x => new { x.Id, x.Slug });
             modelBuilder.Entity<Notice>().Property(x => x.Slug).IsRequired().HasMaxLength(255);
             modelBuilder.Entity<Notice>().Property(x => x.Title).IsRequired().HasMaxLength(255);
 
